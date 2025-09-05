@@ -6,18 +6,16 @@ import { random } from "./util";
 import mongoose from "mongoose";
 import cors from "cors";
 import { Request, Response } from "express";
-import dotenv from "dotenv";
-
-dotenv.config();
+import { JWT_PASSWORD, PORT } from "./config";
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
-const secret = process.env.JWT_PASSWORD || "harshgupta";
-const port = process.env.PORT || 3000;
+const secret = JWT_PASSWORD || "harshgupta";
+const port = PORT || 3000;
 
-// Fix the global declaration
+// Global declaration for TypeScript
 declare global {
   namespace Express {
     interface Request {
@@ -25,6 +23,15 @@ declare global {
     }
   }
 }
+
+// Root route for testing
+app.get('/', (req: Request, res: Response) => {
+  res.json({ 
+    message: 'API is running successfully!',
+    status: 'ok',
+    timestamp: new Date().toISOString()
+  });
+});
 
 app.post("/api/v1/signup", async (req: Request, res: Response) => {
   const { username, password } = req.body;
