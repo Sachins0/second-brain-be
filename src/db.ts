@@ -1,5 +1,5 @@
 import mongoose, { model, Schema } from "mongoose"
-import { MONGODB_URL } from "./config.js";
+import { MONGODB_URL } from "./config";
 
 
 if (!MONGODB_URL) {
